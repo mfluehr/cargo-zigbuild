@@ -1,4 +1,7 @@
-ARG RUST_VERSION=1.93.0
+# Adapted from: https://github.com/rust-cross/cargo-zigbuild/blob/main/Dockerfile
+# The only difference in this version is that MacOS is upgraded to version 14.2.
+
+ARG RUST_VERSION=1.99.0
 
 FROM rust:$RUST_VERSION AS builder
 
@@ -41,8 +44,8 @@ RUN \
 RUN apt-get update && apt-get install -y libclang-dev clang && rm -rf /var/lib/apt/lists/*
 
 # Install macOS SDKs
-RUN curl -L "https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz" | tar -J -x -C /opt
-ENV SDKROOT=/opt/MacOSX11.3.sdk
+RUN curl -L "https://github.com/joseluisq/macosx-sdks/releases/download/14.2/MacOSX14.2.sdk.tar.xz" | tar -J -x -C /opt
+ENV SDKROOT=/opt/MacOSX14.2.sdk
 
 # Install Rust targets
 RUN rustup target add \
